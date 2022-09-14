@@ -2,7 +2,7 @@ describe('Existing User.cy', () => {
 
 
   //TODO - Figure out paths that work for more than just my machine
-  const librarypath = "F:\\Library\\.KavitaTesting\\WantToRead"
+  const librarypath = "F:\\Library\\.KavitaTesting\\Books"
   const emptylibrarypath = "F:\\Library\\.KavitaTesting\\KeepEmpty"
   const libraryname = "Books"
 
@@ -11,19 +11,17 @@ describe('Existing User.cy', () => {
 
 
   it('log in', () => {
-    const username = "Cypress"
-    const email = "asdasdasdasd@easdasd.com"
-    const password = "test123test123"
-
-    cy.visit('/login')
-    cy.get('#username').type(username)
-    cy.get('#password').type(password)
-    cy.get('.btn').click()
+    cy.login()
   })
 
 
   // Validate scan fails if library is an empty folder
-  it('error message if a library is empty', () => {
+  it('error message if a library is empty', {
+    retries: {
+      runMode: 15,
+      openMode: 15,
+    },
+  }, () => {
     cy.get('.not-xs-only > .dark-exempt').click()
     cy.contains('Libraries').click()
     cy.contains('Add Library').click()
@@ -37,7 +35,7 @@ describe('Existing User.cy', () => {
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
     // Wait 15 seconds to give the message time to appear
-    cy.wait(15000)
+    //cy.wait(1000)
     cy.get('app-nav-events-toggle > .btn').click()
     cy.contains("Some of the root folders for the library")
   })
@@ -54,14 +52,13 @@ describe('Existing User.cy', () => {
     cy.contains('Users').click()
     cy.contains('Libraries').click()
 
-    // Validate the "no library" message shows
+    // Validate that the "no library" message shows
     cy.get('.list-group-item').contains('There are no libraries')
   })
 
 
-  // Create a new library
+  // Create a new library 
   it('create a library', () => {
-
     cy.get('.not-xs-only > .dark-exempt').click()
     cy.contains('Libraries').click()
     cy.contains('Add Library').click()
@@ -74,18 +71,19 @@ describe('Existing User.cy', () => {
     cy.get('.component-host-scrollable > .modal-footer > .btn-primary').contains("Share").click({force: true})
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
-    //TODO - should check for the library name on this page and the sidebar
-
+    cy.get('.side-nav-item').contains('Books')
   })
 
 
   // Validate that a new library scans
-  it('Validate that a new library scans', () => {
-    cy.wait(1000)
-    cy.get('.ng-trigger').contains("A scan has")
-    cy.wait(7000) // Seven seconds for 3 Books should be enough
-    cy.get('.side-nav-item').contains('Books').click()
-    cy.get('.subtitle-with-actionables').contains('3 Series')
+  it('and validate that it scans', {
+      retries: {
+        runMode: 15,
+        openMode: 15,
+      },
+    }, () => {
+      cy.get('.side-nav-item').contains('Books').click()
+      cy.get('.subtitle-with-actionables').contains('3 Series')
   })
 
 
@@ -94,7 +92,6 @@ describe('Existing User.cy', () => {
     cy.get('.not-xs-only > .dark-exempt').click()
     cy.contains('Libraries').click()
     cy.get('h4 > .float-end > .btn-secondary').click()
-
     cy.wait(1000)
     cy.get('.ng-trigger').contains("A scan has")
   })
@@ -110,7 +107,6 @@ describe('Existing User.cy', () => {
   it('Edit library folders and validate scan happens', () => {
 
   })
-
 */
 
 })

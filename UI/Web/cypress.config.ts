@@ -7,4 +7,9 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    username: 'Cypress',
+    email: 'asdasdasdasd@easdasd.com',
+    password: 'test123test123',
+  },
 });
