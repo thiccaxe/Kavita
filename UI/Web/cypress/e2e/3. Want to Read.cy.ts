@@ -6,14 +6,7 @@ describe('User flows for Want to Read', () => {
   const bookname = 'Britannica' // Doesn't need to be the full title
 
   it('log in', () => {
-    const username = "Cypress"
-    const email = "asdasdasdasd@easdasd.com"
-    const password = "test123test123"
-
-    cy.visit('/login')
-    cy.get('#username').type(username)
-    cy.get('#password').type(password)
-    cy.get('.btn').click()
+    cy.login()
   })
 
   function GoToWantToRead () {
