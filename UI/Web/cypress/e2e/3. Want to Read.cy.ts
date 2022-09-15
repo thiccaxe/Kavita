@@ -2,35 +2,31 @@ describe('User flows for Want to Read', () => {
 
   const bookname = 'Britannica' // Doesn't need to be the full title
 
-  it('log in', () => {
-    cy.login()
-  })
-
-  function GoToWantToRead () {
-    cy.get('[icon="fa-star"] > .side-nav-item').click()
-  }
-
   function OpenSeriesPageActionMenu () {
     cy.get('.side-nav-item').contains('Books').click()
     cy.get('#jumpbar-index--0 > app-series-card > app-card-item > .card > .card-body').click()
     cy.get('.d-sm-block > .card-actions > app-card-actionables > .d-inline-block').click()
   }
 
+  it('log in', () => {
+    cy.login()
+  })
 
-  ///*
+
   //Add from Series Detail
   it('Add to Want to Read from series detail', () => {
     OpenSeriesPageActionMenu()
     cy.get('[data-popper-placement="bottom-start"] > .dropdown-menu > :nth-child(4)').click() // Add to Want to Read
-    GoToWantToRead()
+    cy.get('.side-nav-item').contains('Want To Read').click()
     cy.get('.card-body').contains(bookname)
   })
+
 
   //Remove from Series Detail
   it('Remove Want to Read from series detail', () => {
     OpenSeriesPageActionMenu()
     cy.get('[data-popper-placement="bottom-start"] > .dropdown-menu > :nth-child(5)').click() // Remove from Want to Read
-    GoToWantToRead()
+    cy.get('.side-nav-item').contains('Want To Read').click()
     cy.get('.main-container').contains("There are no items")
   })
 
@@ -44,7 +40,7 @@ describe('User flows for Want to Read', () => {
     })
 
     cy.get('[data-popper-placement="top-start"] > .dropdown-menu').contains('Add to Want').click()
-    GoToWantToRead()
+    cy.get('.side-nav-item').contains('Want To Read').click()
     cy.get('.card-body').contains(bookname)
 
   })
@@ -59,11 +55,11 @@ describe('User flows for Want to Read', () => {
     })
 
     cy.get('[data-popper-placement="top-start"] > .dropdown-menu').contains('Remove from Want').click()
-    GoToWantToRead()
+    cy.get('.side-nav-item').contains('Want To Read').click()
     cy.get('.main-container').contains("There are no items")
 
   })
-  //*/
+
   /*
   //Ability to add muliple series from library
   it('Add muliple series from library', () => {

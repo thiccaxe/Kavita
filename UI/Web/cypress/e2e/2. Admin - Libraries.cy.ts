@@ -14,14 +14,7 @@ describe('Existing User.cy', () => {
     cy.login()
   })
 
-
-  // Validate scan fails if library is an empty folder
-  it('error message if a library is empty', {
-    retries: {
-      runMode: 15,
-      openMode: 15,
-    },
-  }, () => {
+  it('create an empty library', () => {
     cy.get('.not-xs-only > .dark-exempt').click()
     cy.contains('Libraries').click()
     cy.contains('Add Library').click()
@@ -34,8 +27,15 @@ describe('Existing User.cy', () => {
     cy.get('.component-host-scrollable > .modal-footer > .btn-primary').contains("Share").click({force: true})
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
-    // Wait 15 seconds to give the message time to appear
-    //cy.wait(1000)
+  })
+  // Validate scan fails if library is an empty folder
+  it('error message if a library is empty', {
+      retries: { // 7 Retries * 4 seconds (28 total) should be enough
+        runMode: 7,
+        openMode: 7,
+      },
+    }, () => {
+
     cy.get('app-nav-events-toggle > .btn').click()
     cy.contains("Some of the root folders for the library")
   })
@@ -57,7 +57,7 @@ describe('Existing User.cy', () => {
   })
 
 
-  // Create a new library 
+  // Create a new library
   it('create a library', () => {
     cy.get('.not-xs-only > .dark-exempt').click()
     cy.contains('Libraries').click()
@@ -78,8 +78,8 @@ describe('Existing User.cy', () => {
   // Validate that a new library scans
   it('and validate that it scans', {
       retries: {
-        runMode: 15,
-        openMode: 15,
+        runMode: 7,
+        openMode: 7,
       },
     }, () => {
       cy.get('.side-nav-item').contains('Books').click()

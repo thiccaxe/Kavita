@@ -36,10 +36,9 @@
 //   }
 // }
 
-Cypress.Commands.add('login', (label) => {
+Cypress.Commands.add('login', () => {
     cy.visit('/login')
     cy.get('#username').type(Cypress.env('username'))
     cy.get('#password').type(Cypress.env('password'))
     cy.get('.btn').click()
   })
-  
