@@ -54,11 +54,21 @@ Setup guides, FAQ, the more information we have on the [wiki](https://wiki.kavit
 
 ### Testing ###
 We use [Cypress](https://www.cypress.io/) for end-to-end testing before each release
+- Clone the submodule (TestData) by running
+  - `git submodule update --init --recursive`
+  - `git submodule update --remote --merge` inside the directory (TestData)
 - Make sure the API is running in Visual Studio/Rider before continuing
 - To open the Cypress GUI, run `ng e2e`, then go to `Start E2E Testing > Specs`. The specs can be found in `Kavita\UI\Web\cypress\e2e`
 - To run all specs in order from the command line, run `ng run kavita-webui:cypress-run --browser firefox`
   - If you don't have Firefox installed, substitute `--browser firefox` with `--browser edge` or `--browser chrome`
 - To run a specific spec from the command line, run `ng run kavita-webui:cypress-run --browser firefox --spec "cypress\e2e\SPEC_FILE"`
+
+#### Cypress Setup ####
+Cypress can run without any database and setup some basics, however if you have an existing database, you need to manually setup the Cypress user.
+User: Cypress
+Email: asdasdasdasd@easdasd.com
+Password: test123test123
+Role: Admin, Libraries: None (this will be handled by Cypress)
 
 ### Swagger API ###
 If you just want to play with Swagger, you can just
