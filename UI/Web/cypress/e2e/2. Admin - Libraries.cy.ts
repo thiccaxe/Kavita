@@ -1,13 +1,22 @@
+const resolve = require('path').resolve
+
 describe('Existing User.cy', () => {
 
+  let testDirectory = '';
+  let emptyPath = '';
 
-  //TODO - Figure out paths that work for more than just my machine
-  const librarypath = "F:\\Library\\.KavitaTesting\\Books"
-  const emptylibrarypath = "F:\\Library\\.KavitaTesting\\KeepEmpty"
-  const libraryname = "Books"
+  beforeEach(()=>{
+    if (testDirectory != '') return;
+    cy.request('http://localhost:5000/api/test/test-data-dir').then((response) => {
+      testDirectory = response.body;
+      emptyPath = testDirectory + '/Empty/';
+      console.log('Test Data: ', testDirectory);
+    });
+  });
 
-  //beforeEach(()=>{
-  //})
+  
+
+  
 
 
   it('log in', () => {
@@ -19,15 +28,18 @@ describe('Existing User.cy', () => {
     cy.contains('Libraries').click()
     cy.contains('Add Library').click()
 
-    cy.get('#library-name').type('Empty')
+    cy.get('#library-name').type('Cypress_Empty')
     cy.get('#library-type').select('Book')
     cy.get('.modal-body > h4 > .btn').click()
 
-    cy.get('#typeahead-focus').type(emptylibrarypath) // This gives a harmless "Invalid Path" error
+    
+
+    cy.get('#typeahead-focus').type(emptyPath) // This gives a harmless "Invalid Path" error
     cy.get('.component-host-scrollable > .modal-footer > .btn-primary').contains("Share").click({force: true})
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
   })
+
   // Validate scan fails if library is an empty folder
   it('error message if a library is empty', {
       retries: { // 7 Retries * 4 seconds (28 total) should be enough
@@ -67,7 +79,7 @@ describe('Existing User.cy', () => {
     cy.get('#library-type').select('Book')
     cy.get('.modal-body > h4 > .btn').click()
 
-    cy.get('#typeahead-focus').type(librarypath) // This causes a "Invalid Path" Kavita error, but it's safe to ignore
+    cy.get('#typeahead-focus').type(testDirectory) // This causes a "Invalid Path" Kavita error, but it's safe to ignore
     cy.get('.component-host-scrollable > .modal-footer > .btn-primary').contains("Share").click({force: true})
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
