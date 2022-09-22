@@ -9,7 +9,7 @@
         <div class="input-group">
             <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="path" [ngbTypeahead]="search"
                 (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-                (ngModelChange)="updateTable()" #instance="ngbTypeahead" placeholder="Start typing or select path"
+                #instance="ngbTypeahead" placeholder="Start typing or select path"
                 [resultTemplate]="rt" />
         </div>
         <ng-template #rt let-r="result" let-t="term">

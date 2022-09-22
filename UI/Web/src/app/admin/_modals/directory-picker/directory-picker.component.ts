@@ -42,10 +42,10 @@ export class DirectoryPickerComponent implements OnInit {
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
-
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$, text$).pipe(
-      debounceTime(300),
+    const inputFocus$ = this.focus$.pipe(distinctUntilChanged());
+    
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      debounceTime(200),
       distinctUntilChanged(),
       tap(() => this.searching = true),
       switchMap(term =>
@@ -83,10 +83,6 @@ export class DirectoryPickerComponent implements OnInit {
     } else {
       this.loadChildren(this.currentRoot);
     }
-  }
-
-  updateTable() {
-    this.loadChildren(this.path);
   }
 
 
