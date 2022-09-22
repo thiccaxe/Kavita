@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: '4xobn4',
+  experimentalWebKitSupport: true,
   e2e: {
     baseUrl: 'http://localhost:4200/',
     setupNodeEvents(on, config) {
