@@ -1,22 +1,20 @@
-const resolve = require('path').resolve
-
 describe('Existing User.cy', () => {
 
   let testDirectory = '';
-  let emptyPath = '';
+  let libraryPaths: {manga: string, book: string, comic: string, empty: string};
 
   beforeEach(()=>{
     if (testDirectory != '') return;
     cy.request('http://localhost:5000/api/test/test-data-dir').then((response) => {
       testDirectory = response.body;
-      emptyPath = testDirectory + '/Empty/';
-      console.log('Test Data: ', testDirectory);
+      libraryPaths = {
+        manga: testDirectory + '/Manga/',
+        book: testDirectory + '/Books/',
+        comic: testDirectory + '/Comics/',
+        empty: testDirectory + '/Empty/',
+      };
     });
   });
-
-  
-
-  
 
 
   it('log in', () => {
@@ -34,7 +32,7 @@ describe('Existing User.cy', () => {
 
     
 
-    cy.get('#typeahead-focus').type(emptyPath) // This gives a harmless "Invalid Path" error
+    cy.get('#typeahead-focus').type(libraryPaths.empty) // This gives a harmless "Invalid Path" error
     cy.get('.component-host-scrollable > .modal-footer > .btn-primary').contains("Share").click({force: true})
     cy.get('.modal-footer > .btn-primary').contains("Save").click({force: true})
 
@@ -75,7 +73,7 @@ describe('Existing User.cy', () => {
     cy.contains('Libraries').click()
     cy.contains('Add Library').click()
 
-    cy.get('#library-name').type('Books')
+    cy.get('#library-name').type('Cypress_Books')
     cy.get('#library-type').select('Book')
     cy.get('.modal-body > h4 > .btn').click()
 
