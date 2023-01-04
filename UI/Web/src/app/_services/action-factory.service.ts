@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService, TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { map, Observable, shareReplay } from 'rxjs';
 import { Chapter } from '../_models/chapter';
 import { CollectionTag } from '../_models/collection-tag';

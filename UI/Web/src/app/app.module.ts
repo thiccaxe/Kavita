@@ -1,5 +1,5 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,12 +14,31 @@ import { SidenavModule } from './sidenav/sidenav.module';
 import { NavModule } from './nav/nav.module';
 import { DevicesComponent } from './_components/devices/devices.component';
 import { TranslocoRootModule } from './transloco-root.module';
+import { TranslocoService } from '@ngneat/transloco';
+import { AccountService } from './_services/account.service';
+import { of } from 'rxjs';
 
 
 
 // Disable Web Animations if the user's browser (such as iOS 12.5.5) does not support this.
 const disableAnimations = !('animate' in document.documentElement);
 if (disableAnimations) console.error("Web Animations have been disabled as your current browser does not support this.");
+
+export function preloadUser(accountService: AccountService, transloco: TranslocoService) {
+    console.log('Preloading locale');
+    return () => {
+        const cachedLocale = localStorage.getItem('kavita--locale');
+        if (cachedLocale !== undefined) {
+            return of(cachedLocale);
+        }
+        return accountService.currentUser$.subscribe(user => {
+            console.log('loading english locale');
+            localStorage.setItem('kavita--locale', user?.preferences.locale || 'en');
+            transloco.setActiveLang(user?.preferences.locale || 'en');
+            return transloco.load(user?.preferences.locale || 'en');
+        });
+    }
+}
 
 
 @NgModule({
@@ -48,6 +67,12 @@ if (disableAnimations) console.error("Web Animations have been disabled as your 
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         Title,
         { provide: SAVER, useFactory: getSaver },
+        {
+            provide: APP_INITIALIZER,
+            multi: true,
+            useFactory: preloadUser,
+            deps: [AccountService, TranslocoService]
+          }
     ],
     bootstrap: [AppComponent]
 })

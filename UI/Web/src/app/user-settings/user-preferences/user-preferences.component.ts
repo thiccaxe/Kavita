@@ -217,7 +217,8 @@ export class UserPreferencesComponent implements OnInit, OnDestroy {
       blurUnreadSummaries: modelSettings.blurUnreadSummaries,
       promptForDownloadSize: modelSettings.promptForDownloadSize,
       noTransitions: modelSettings.noTransitions,
-      emulateBook: modelSettings.emulateBook
+      emulateBook: modelSettings.emulateBook,
+      locale: 'en',
     };
 
     this.observableHandles.push(this.accountService.updatePreferences(data).subscribe((updatedPrefs) => {
