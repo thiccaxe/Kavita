@@ -1,14 +1,50 @@
 {
-    "login": "Test",
     "grouping": {
         "volume": "volume",
         "chapter": "chapter",
         "issue": "issue",
         "series": "series"
     },
-    "series-detail": {
-        "companion": {
-            "pageSettings": "Page Settings"
+    "common": {
+        "locale_name": "English"
+    },
+    "pages": {
+        "series-detail": {
+            "companion": {
+                "pageSettings": "Page Settings",
+                "card": "Card",
+                "list": "List"
+            },
+            "tabs": {
+                "specials": "Specials",
+                "books": "Books"
+            }
+        }
+    },
+    "components": {
+        "actionables": {
+            "scanLibrary": "Scan Library",
+            "others": "Others",
+            "refreshCovers": "Refresh Covers",
+            "analyzeFiles": "Analyze Files",
+            "settings": "Settings",
+            "edit": "Edit",
+            "markAsRead": "Mark as Read",
+            "markAsUnread": "Mark as Unread",
+            "scanSeries": "Scan Series",
+            "addTo": "Add to",
+            "addToWantToRead": "Add to Want To Read",
+            "removeToWantToRead": "Remove from Want To Read",
+            "addToReadingList": "Add to Reading List",
+            "addToCollection": "Add to Collection",
+            "sendTo": "Send To",
+            "delete": "Delete",
+            "download": "Download",
+            "readIncognito": "Read Incognito",
+            "details": "Details",
+            "viewSeries": "View Series",
+            "clear": "Clear"
         }
     }
+
 }

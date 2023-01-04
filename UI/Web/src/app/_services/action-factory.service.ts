@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { TranslocoService } from '@ngneat/transloco';
 import { map, Observable, shareReplay } from 'rxjs';
 import { Chapter } from '../_models/chapter';
 import { CollectionTag } from '../_models/collection-tag';
 import { Device } from '../_models/device/device';
 import { Library } from '../_models/library';
-import { MangaFormat } from '../_models/manga-format';
 import { ReadingList } from '../_models/reading-list';
 import { Series } from '../_models/series';
 import { Volume } from '../_models/volume';
@@ -129,7 +129,8 @@ export class ActionFactoryService {
   isAdmin = false;
   hasDownloadRole = false;
 
-  constructor(private accountService: AccountService, private deviceService: DeviceService) {
+  constructor(private accountService: AccountService, private deviceService: DeviceService,
+    private translocoService: TranslocoService) {
     this.accountService.currentUser$.subscribe((user) => {
       if (user) {
         this.isAdmin = this.accountService.hasAdminRole(user);
@@ -181,31 +182,35 @@ export class ActionFactoryService {
     return actions;
   }
 
+  private translate(key: string) {
+    return this.translocoService.translate('components.actionables.' + key);
+  }
+
   private _resetActions() {
     this.libraryActions = [
       {
         action: Action.Scan,
-        title: 'Scan Library',
+        title: this.translate('scanLibrary'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Submenu,
-        title: 'Others',
+        title: this.translate('others'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [
           {
             action: Action.RefreshMetadata,
-            title: 'Refresh Covers',
+            title: this.translate('refreshCovers'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             children: [],
           },
           {
             action: Action.AnalyzeFiles,
-            title: 'Analyze Files',
+            title: this.translate('analyzeFiles'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             children: [],
@@ -214,7 +219,7 @@ export class ActionFactoryService {
       },
       {
         action: Action.Edit,
-        title: 'Settings',
+        title: this.translate('settings'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [],
@@ -224,7 +229,7 @@ export class ActionFactoryService {
     this.collectionTagActions = [
       {
         action: Action.Edit,
-        title: 'Edit',
+        title: this.translate('edit'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [],
@@ -234,55 +239,55 @@ export class ActionFactoryService {
     this.seriesActions = [
       {
         action: Action.MarkAsRead,
-        title: 'Mark as Read',
+        title: this.translate('markAsRead'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.MarkAsUnread,
-        title: 'Mark as Unread',
+        title: this.translate('markAsUnread'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Scan,
-        title: 'Scan Series',
+        title: this.translate('scanSeries'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [],
       },
       {
         action: Action.Submenu,
-        title: 'Add to',
+        title: this.translate('addTo'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [
         	{
             action: Action.AddToWantToReadList,
-            title: 'Add to Want To Read',
+            title: this.translate('addToWantToRead'),
             callback: this.dummyCallback,
             requiresAdmin: false,
             children: [],
           },
           {
             action: Action.RemoveFromWantToReadList,
-            title: 'Remove from Want To Read',
+            title: this.translate('removeFromWantToRead'),
             callback: this.dummyCallback,
             requiresAdmin: false,
             children: [],
           },
           {
             action: Action.AddToReadingList,
-            title: 'Add to Reading List',
+            title: this.translate('addToReadingList'),
             callback: this.dummyCallback,
             requiresAdmin: false,
             children: [],
           },
           {
             action: Action.AddToCollection,
-            title: 'Add to Collection',
+            title: this.translate('addToCollection'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             children: [],
@@ -291,7 +296,7 @@ export class ActionFactoryService {
       },
       {
         action: Action.Submenu,
-        title: 'Send To',
+        title: this.translate('sendTo'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [
@@ -309,27 +314,27 @@ export class ActionFactoryService {
       },
       {
         action: Action.Submenu,
-        title: 'Others',
+        title: this.translate('others'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [
           {
             action: Action.RefreshMetadata,
-            title: 'Refresh Covers',
+            title: this.translate('refreshCovers'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             children: [],
           },
           {
             action: Action.AnalyzeFiles,
-            title: 'Analyze Files',
+            title: this.translate('analyzeFiles'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             children: [],
           },
           {
             action: Action.Delete,
-            title: 'Delete',
+            title: this.translate('delete'),
             callback: this.dummyCallback,
             requiresAdmin: true,
             class: 'danger',
@@ -339,14 +344,14 @@ export class ActionFactoryService {
       },
       {
         action: Action.Download,
-        title: 'Download',
+        title: this.translate('download'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Edit,
-        title: 'Edit',
+        title: this.translate('edit'),
         callback: this.dummyCallback,
         requiresAdmin: true,
         children: [],
@@ -356,34 +361,34 @@ export class ActionFactoryService {
     this.volumeActions = [
       {
         action: Action.IncognitoRead,
-        title: 'Read Incognito',
+        title: this.translate('readIncognito'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.MarkAsRead,
-        title: 'Mark as Read',
+        title: this.translate('markAsRead'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.MarkAsUnread,
-        title: 'Mark as Unread',
+        title: this.translate('markAsUnread'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
 			{
 				action: Action.Submenu,
-				title: 'Add to',
+				title: this.translate('addTo'),
 				callback: this.dummyCallback,
 				requiresAdmin: false,
 				children: [
 					{
 						action: Action.AddToReadingList,
-						title: 'Add to Reading List',
+						title: this.translate('addToReadingList'),
 						callback: this.dummyCallback,
 						requiresAdmin: false,
 						children: [],
@@ -392,7 +397,7 @@ export class ActionFactoryService {
 			},
       {
         action: Action.Submenu,
-        title: 'Send To',
+        title: this.translate('sendTo'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [
@@ -410,14 +415,14 @@ export class ActionFactoryService {
       },
       {
         action: Action.Download,
-        title: 'Download',
+        title: this.translate('download'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Edit,
-        title: 'Details',
+        title: this.translate('details'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
@@ -427,34 +432,34 @@ export class ActionFactoryService {
     this.chapterActions = [
       {
         action: Action.IncognitoRead,
-        title: 'Read Incognito',
+        title: this.translate('readIncognito'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.MarkAsRead,
-        title: 'Mark as Read',
+        title: this.translate('markAsRead'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.MarkAsUnread,
-        title: 'Mark as Unread',
+        title: this.translate('markAsUnread'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
 			{
 				action: Action.Submenu,
-				title: 'Add to',
+				title: this.translate('addTo'),
 				callback: this.dummyCallback,
 				requiresAdmin: false,
 				children: [
 					{
 						action: Action.AddToReadingList,
-						title: 'Add to Reading List',
+						title: this.translate('addToReadingList'),
 						callback: this.dummyCallback,
 						requiresAdmin: false,
 						children: [],
@@ -463,7 +468,7 @@ export class ActionFactoryService {
 			},
       {
         action: Action.Submenu,
-        title: 'Send To',
+        title: this.translate('sendTo'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [
@@ -482,14 +487,14 @@ export class ActionFactoryService {
       // RBS will handle rendering this, so non-admins with download are appicable
       {
         action: Action.Download,
-        title: 'Download',
+        title: this.translate('download'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Edit,
-        title: 'Details',
+        title: this.translate('details'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
@@ -499,14 +504,14 @@ export class ActionFactoryService {
     this.readingListActions = [
       {
         action: Action.Edit,
-        title: 'Edit',
+        title: this.translate('edit'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Delete,
-        title: 'Delete',
+        title: this.translate('delete'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         class: 'danger',
@@ -517,21 +522,21 @@ export class ActionFactoryService {
     this.bookmarkActions = [
       {
         action: Action.ViewSeries,
-        title: 'View Series',
+        title: this.translate('viewSeries'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.DownloadBookmark,
-        title: 'Download',
+        title: this.translate('download'),
         callback: this.dummyCallback,
         requiresAdmin: false,
         children: [],
       },
       {
         action: Action.Delete,
-        title: 'Clear',
+        title: this.translate('clear'),
         callback: this.dummyCallback,
         class: 'danger',
         requiresAdmin: false,
