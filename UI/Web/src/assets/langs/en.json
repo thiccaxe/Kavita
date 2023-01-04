@@ -5,5 +5,10 @@
         "chapter": "chapter",
         "issue": "issue",
         "series": "series"
+    },
+    "series-detail": {
+        "companion": {
+            "pageSettings": "Page Settings"
+        }
     }
 }

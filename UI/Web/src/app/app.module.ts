@@ -13,6 +13,7 @@ import { SAVER, getSaver } from './shared/_providers/saver.provider';
 import { SidenavModule } from './sidenav/sidenav.module';
 import { NavModule } from './nav/nav.module';
 import { DevicesComponent } from './_components/devices/devices.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 
 
@@ -40,6 +41,7 @@ if (disableAnimations) console.error("Web Animations have been disabled as your 
             countDuplicates: true,
             autoDismiss: true
         }),
+        TranslocoRootModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

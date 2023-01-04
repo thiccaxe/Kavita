@@ -10,6 +10,7 @@ import { PipeModule } from '../pipe/pipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedSideNavCardsModule } from '../shared-side-nav-cards/shared-side-nav-cards.module';
 import { SeriesDetailComponent } from './_components/series-detail/series-detail.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { SeriesDetailComponent } from './_components/series-detail/series-detail
     SharedModule, // person badge, badge expander (these 2 can be their own module)
     SharedSideNavCardsModule,
 
-    SeriesDetailRoutingModule
+    SeriesDetailRoutingModule,
+    TranslocoModule,
   ]
 })
 export class SeriesDetailModule { }

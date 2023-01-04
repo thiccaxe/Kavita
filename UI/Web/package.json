@@ -30,6 +30,7 @@
     "@iharbeck/ngx-virtual-scroller": "^13.0.4",
     "@microsoft/signalr": "^6.0.2",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
+    "@ngneat/transloco": "^4.2.1",
     "@popperjs/core": "^2.11.2",
     "@swimlane/ngx-charts": "^20.1.0",
     "@types/file-saver": "^2.0.5",
