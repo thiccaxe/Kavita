@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -417,7 +417,7 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<MemberDto>> GetPendingMemberDtosAsync()
     {
         return await _context.Users
-            .Where(u => !u.EmailConfirmed && u.LastActive == DateTime.MinValue)
+            .Where(u => !u.EmailConfirmed)
             .Include(x => x.Libraries)
             .Include(r => r.UserRoles)
             .ThenInclude(r => r.Role)
