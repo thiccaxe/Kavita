@@ -138,10 +138,18 @@ $action-bar-height: 38px;
 
     &.column-layout-1 {
         height: calc(var(--vh) * 100);
+
+        &.writing-style-vertical {
+            overflow-x: hidden;
+        }
     }
 
     &.column-layout-2 {
         height: calc(var(--vh) * 100);
+
+        &.writing-style-vertical {
+            overflow-x: hidden;
+        }
     }
 
     &.writing-style-vertical {
